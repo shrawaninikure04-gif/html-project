@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Smart Grocery List Manager</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f0f0f0;
+margin:40px;
+}
+
+.container{
+background:white;
+padding:20px;
+width:500px;
+margin:auto;
+box-shadow:0px 0px 10px gray;
+}
+
+h2{
+text-align:center;
+}
+
+input{
+padding:8px;
+margin:5px;
+width:90%;
+}
+
+button{
+padding:8px 12px;
+margin:5px;
+cursor:pointer;
+}
+
+table{
+width:100%;
+margin-top:20px;
+border-collapse:collapse;
+}
+
+table, th, td{
+border:1px solid black;
+padding:10px;
+text-align:center;
+}
+
+.bought{
+text-decoration: line-through;
+color:gray;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Smart Grocery List Manager 🛒</h2>
+
+<input type="text" id="item" placeholder="Enter Grocery Item">
+<input type="number" id="quantity" placeholder="Enter Quantity">
+
+<button onclick="addItem()">Add Item</button>
+
+<table id="groceryTable">
+
+<tr>
+<th>Item</th>
+<th>Quantity</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+
+</table>
+
+</div>
+
+<script>
+
+function addItem(){
+
+var item=document.getElementById("item").value;
+var quantity=document.getElementById("quantity").value;
+
+if(item=="" || quantity==""){
+alert("Please enter item and quantity");
+return;
+}
+
+var table=document.getElementById("groceryTable");
+
+var row=table.insertRow();
+
+var cell1=row.insertCell(0);
+var cell2=row.insertCell(1);
+var cell3=row.insertCell(2);
+var cell4=row.insertCell(3);
+
+cell1.innerHTML=item;
+cell2.innerHTML=quantity;
+cell3.innerHTML="Pending";
+
+cell4.innerHTML=
+"<button onclick='markBought(this)'>Bought</button>"+
+"<button onclick='editItem(this)'>Edit</button>"+
+"<button onclick='deleteItem(this)'>Delete</button>";
+
+document.getElementById("item").value="";
+document.getElementById("quantity").value="";
+
+}
+
+function deleteItem(btn){
+var row=btn.parentNode.parentNode;
+row.remove();
+}
+
+function editItem(btn){
+
+var row=btn.parentNode.parentNode;
+
+var item=row.cells[0].innerHTML;
+var quantity=row.cells[1].innerHTML;
+
+document.getElementById("item").value=item;
+document.getElementById("quantity").value=quantity;
+
+row.remove();
+
+}
+
+function markBought(btn){
+
+var row=btn.parentNode.parentNode;
+
+row.cells[0].classList.add("bought");
+row.cells[1].classList.add("bought");
+
+row.cells[2].innerHTML="Bought";
+
+}
+
+</script>
+
+</body>
+</html>
